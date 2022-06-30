@@ -42,7 +42,7 @@ To check the git status
 ```
 git status
 ```
-To check all version maintained by git
+To check all versions maintained by git
 ```
 git log
 ```
