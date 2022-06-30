@@ -15,7 +15,9 @@ def get_requirements_list()->List[str]:
     return this function is going to return a list which contains a list of libraries mentioned in requirements.txt file
     """
     with open (REQUIREMENT_FILE_NAME) as f:
-        return f.readlines().remove("-e .")
+        l=f.readlines()
+        if l  in [ "-e ."] :
+            return l.remove("-e .")
 
 
 
