@@ -5,7 +5,7 @@ app=Flask(__name__)
 
 @app.route("/",methods=['GET','POST'])
 def index():
-    return "Love u Prema.I miss u too.Don't forget to had ur breakfast and lunch.Take care of urself.Bye!..."
+    return "Love u Prema.\n I miss u too.\n Don't forget to had ur breakfast and lunch.\n Take care of urself.\n Bye!..."
 
 if __name__=="__main__":
     app.run(debug=True)    
