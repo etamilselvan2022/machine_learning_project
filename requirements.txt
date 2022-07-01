@@ -4,4 +4,5 @@ Flask
 gunicorn
 sklearn
 ipykernel
+PyYAML
 -e .
