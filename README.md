@@ -103,3 +103,8 @@ Install ipynbkernel
 ```
 pip install ipykernel
 ```
+
+Install yaml
+```
+pip install PyYAML
+```

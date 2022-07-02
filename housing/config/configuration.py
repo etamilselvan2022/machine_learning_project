@@ -1,3 +1,4 @@
+from regex import E
 from housing.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig,TrainingPipelineConfig
 from housing.util.util import read_yaml_file
 from housing.constant import *
@@ -10,16 +11,43 @@ import os,sys
 
 class Configuration:
 
-    def __init__(self,config_file_path:str=CONFIG_FILE_PATH,
-                      current_time_stamp:str=CURRENT_TIME_STAMP) ->None:
-
-        self.config_info=read_yaml_file(file_path=config_file_path)
-        self.traning_pipeline_config=self.get_training_pipeline_config()
-        self.time_stamp=current_time_stamp
+    def __init__(self,
+                 config_file_path:str=CONFIG_FILE_PATH,
+                 current_time_stamp:str=CURRENT_TIME_STAMP) ->None:
+        try:
+            self.config_info=read_yaml_file(file_path=config_file_path)
+            self.traning_pipeline_config=self.get_training_pipeline_config()
+            self.data_ingestion_config=self.get_data_ingestion_config()
+            self.time_stamp=current_time_stamp
+        except Exception as e:
+            raise HousingException(e,sys) from e
 
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
-        pass
+        try:
+            data_ingestion_config=self.config_info[DATA_INGESTION_CONFIG_KEY]
+           
+            dataset_download_url=data_ingestion_config[DATA_INGESTION_DOWNLOAD_URL_KEY]
+            tgz_download_dir=data_ingestion_config[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
+            raw_data_dir=data_ingestion_config[DATA_INGESTION_RAW_DATA_DIR_KEY]
+            ingested_train_dir=data_ingestion_config[DATA_INGESTION_TRAIN_DIR_KEY]
+            ingested_test_dir=data_ingestion_config[DATA_INGESTION_TEST_DIR_KEY]
+
+            logging.info(f"dataset_download_url:{dataset_download_url}")
+            logging.info(f"tgz_download_dir:{tgz_download_dir}")
+            logging.info(f"raw_data_dir:{raw_data_dir}")
+            logging.info(f"ingested_train_dir:{ingested_train_dir}")
+            logging.info(f"ingested_test_dir:{ingested_test_dir}")
+            
+            data_ingestion_config=DataIngestionConfig(dataset_download_url=dataset_download_url, 
+                                                      tgz_download_dir=tgz_download_dir, 
+                                                      raw_data_dir=raw_data_dir, 
+                                                      ingested_train_dir=ingested_train_dir, 
+                                                      ingested_test_dir=ingested_test_dir)
+            logging.info(f"data_ingestion_config:{data_ingestion_config}")                                                                  
+            return data_ingestion_config                                                   
+        except Exception as e:
+            raise HousingException(e,sys) from e    
 
     def get_data_validation_config(self) -> DataValidationConfig:
         pass
