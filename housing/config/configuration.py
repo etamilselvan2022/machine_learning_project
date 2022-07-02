@@ -1,4 +1,3 @@
-from regex import E
 from housing.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig,TrainingPipelineConfig
 from housing.util.util import read_yaml_file
 from housing.constant import *
@@ -25,13 +24,24 @@ class Configuration:
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         try:
-            data_ingestion_config=self.config_info[DATA_INGESTION_CONFIG_KEY]
+
+            artifact_dir=self.traning_pipeline_config.artifact_dir
+
+            data_ingestion_info=self.config_info[DATA_INGESTION_CONFIG_KEY]
+
+            data_ingestion_artifact_dir=os.path.join(artifact_dir,
+                                                     DATA_INGESTION_ARTIFACT_DIR,
+                                                     self.time_stamp
+                                                     )
            
-            dataset_download_url=data_ingestion_config[DATA_INGESTION_DOWNLOAD_URL_KEY]
-            tgz_download_dir=data_ingestion_config[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
-            raw_data_dir=data_ingestion_config[DATA_INGESTION_RAW_DATA_DIR_KEY]
-            ingested_train_dir=data_ingestion_config[DATA_INGESTION_TRAIN_DIR_KEY]
-            ingested_test_dir=data_ingestion_config[DATA_INGESTION_TEST_DIR_KEY]
+            dataset_download_url=data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
+            
+            tgz_download_dir=os.path.join(data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY])
+            raw_data_dir=os.path.join(data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_RAW_DATA_DIR_KEY])
+            
+            ingested_data_dir=os.path.join(data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_INGESTED_DIR_NAME_KEY])
+            ingested_train_dir=os.path.join(ingested_data_dir,data_ingestion_info[DATA_INGESTION_TRAIN_DIR_KEY])
+            ingested_test_dir=os.path.join(ingested_data_dir,data_ingestion_info[DATA_INGESTION_TEST_DIR_KEY])
 
             logging.info(f"dataset_download_url:{dataset_download_url}")
             logging.info(f"tgz_download_dir:{tgz_download_dir}")
