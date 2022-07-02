@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-ROOT_DIR=os.getcwd()
+ROOT_DIR='e:\\ineuron.ai\\projects\\machine_learning_project'##os.getcwd()
 
 
 CONFIG_DIR="config"
