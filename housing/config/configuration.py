@@ -17,7 +17,7 @@ class Configuration:
             self.config_info=read_yaml_file(file_path=config_file_path)
             self.time_stamp=current_time_stamp
             self.traning_pipeline_config=self.get_training_pipeline_config()
-            self.data_ingestion_config=self.get_data_ingestion_config()
+           #### self.data_ingestion_config=self.get_data_ingestion_config()
             
         except Exception as e:
             raise HousingException(e,sys) from e
