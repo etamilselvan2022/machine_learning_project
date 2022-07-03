@@ -17,9 +17,13 @@ class HousingException(Exception):
         error_details:object of sys module
         '''
         _ ,_ , exec_tb=error_detail.exc_info()
-        line_number=exec_tb.tb_frame.f_lineno
+        exception_block_line_no=exec_tb.tb_frame.f_lineno
+        try_block_line_no=exec_tb.tb_lineno
         file_name=exec_tb.tb_frame.f_code.co_filename
-        error_message=f"Error Occured in Script:[{file_name}] at line number:[{line_number}] and error_message is {error_message}"
+        error_message=f"""Error Occured in Script:[{file_name}] 
+                      at exception block line number:[{exception_block_line_no}] 
+                      and try block line number:[{try_block_line_no}] 
+                      and error_message is {error_message}"""
         return error_message        
 
 
