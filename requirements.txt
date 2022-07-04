@@ -4,5 +4,6 @@ Flask
 gunicorn
 sklearn
 PyYAML
+evidently
 six
 -e .
